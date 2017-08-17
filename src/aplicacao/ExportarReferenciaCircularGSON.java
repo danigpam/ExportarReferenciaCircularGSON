@@ -11,7 +11,7 @@ import jsonstrategy.ExcluirProdutosDaCategoriaStrategy;
  *
  * @author danigpam
  */
-public class FixGSONCircularReference {
+public class ExportarReferenciaCircularGSON {
 
     public static void main(String[] args) {
        
@@ -25,10 +25,17 @@ public class FixGSONCircularReference {
         String jsonCategoria = gson.toJson(cat);
         System.out.println("JSON da categoria: " + jsonCategoria);
         
+        //IMPRIME:
+        //JSON da categoria: {"nome":"comidas","produtos":[{"nome":"chocolate","preco":10.0},{"nome":"abacate","preco":5.0}]}
+        
         Gson gson2 = new GsonBuilder()
                 .addSerializationExclusionStrategy(new ExcluirProdutosDaCategoriaStrategy())
                 .create();
         String jsonProduto = gson2.toJson(prod);
         System.out.println("JSON do produto: " + jsonProduto);
+        
+        //IMPRIME:
+        //JSON do produto: {"nome":"chocolate","preco":10.0,"categoria":{"nome":"comidas"}}
+        
     }  
 }
